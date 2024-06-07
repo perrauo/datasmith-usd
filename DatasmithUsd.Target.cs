@@ -16,11 +16,10 @@ public class DatasmithUsdTarget : TargetRules
 		Type = TargetType.Program;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 		SolutionDirectory = "Programs/Datasmith";
-		bBuildInSolutionByDefault = false;
-		bLegalToDistributeBinary = true;
+		//bBuildInSolutionByDefault = false;
 
 		bShouldCompileAsDLL = true;
-		LinkType = TargetLinkType.Monolithic;
+		//LinkType = TargetLinkType.Monolithic;
 
 		// WindowsPlatform.ModuleDefinitionFile = "Programs/Enterprise/Datasmith/DatasmithUsdExporter/DatasmithUsdExporterWithDirectLink.def";
 
@@ -30,15 +29,15 @@ public class DatasmithUsdTarget : TargetRules
 		bBuildWithEditorOnlyData = true;
 		bCompileAgainstEngine = false;
 		bCompileAgainstCoreUObject = true;
-		bCompileICU = false;
+		//bCompileICU = false;
 		bUsesSlate = false;
 
-		bHasExports = true;
-		bForceEnableExceptions = true;
+		//bHasExports = true;
+		bForceEnableExceptions = false;
 
 		GlobalDefinitions.Add("UE_EXTERNAL_PROFILING_ENABLED=0"); // For DirectLinkUI (see FDatasmithExporterManager::FInitOptions)
 
-		CppStandard = CppStandardVersion.Cpp17;
+		CppStandard = CppStandardVersion.Cpp20;
 	}
 
 	protected void AddCopyPostBuildStep(TargetInfo Target)

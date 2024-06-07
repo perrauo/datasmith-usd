@@ -1,18 +1,28 @@
 // DatasmithUsdPlugin.cpp
 #include "DatasmithUsd.h"
-#include "pybind11/pybind11.h"
+
+#include "USDIncludesStart.h"
+#include <pxr/usd/usd/stage.h>
+#include <pxr/usd/usd/prim.h>
+#include <boost/python.hpp>
+#include "USDIncludesEnd.h"
 
 #include <iostream>
+#include <string>
 
-void DatasmithUsd::Export() {
-    // Your export functionality goes here
-    //std::cout << "Datasmith Export!" << std::endl;
+PXR_NAMESPACE_OPEN_SCOPE
+
+void FDatasmithUsd::Export(const UsdStageRefPtr& InStage) {
+	auto Prim = InStage->GetDefaultPrim();	
+    std::cout << Prim.GetName().data() << std::endl;
 }
 
-namespace py = pybind11;
+PXR_NAMESPACE_CLOSE_SCOPE
 
-PYBIND11_MODULE(DatasmithUsd, m) {
-    py::class_<DatasmithUsd>(m, "DatasmithUsd")
-        .def(py::init<>())
-        .def("export", &DatasmithUsd::Export);
+BOOST_PYTHON_MODULE(DatasmithUsd)
+{
+	using namespace boost::python;
+	class_<pxr::FDatasmithUsd>("DatasmithUsd")
+		.def(init<>()) // Default constructor
+		.def("export", &pxr::FDatasmithUsd::Export);
 }

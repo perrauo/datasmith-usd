@@ -4,11 +4,12 @@ from pxr.Usdviewq.plugin import PluginContainer
 import DatasmithUsd
 
 # Create an instance of the DatasmithUsdPlugin class
-plugin_instance = DatasmithUsd.DatasmithUsd()
+pluginInstance = DatasmithUsd.DatasmithUsd()
 
 def export(usdviewApi):
+    usdStage = usdviewApi.stage
     # Call the export method
-    plugin_instance.export()
+    pluginInstance.export(usdStage)
 
 class DatasmithUsdPluginContainer(PluginContainer):
     def registerPlugins(self, plugRegistry, usdviewApi):            

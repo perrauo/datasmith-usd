@@ -54,6 +54,7 @@ To add a USD stage, use the `AddStage` method of the `FModule` class. This will 
 - **Missing datasmith elements**: I have found that despite my best effort, the majority of the datasmith elements are not being transmitted correctly. Further investigation necessary.
 - ![image](https://github.com/perrauo/datasmith-usd/assets/24371247/8a355349-a4dc-47de-9e81-6a86a249d38c)
 - **Synchronizing the Scene** To synchronize the scene, use the `Sync` method of the `FModule` class. This is intended to update the Datasmith scene with the latest changes from the USD stage.
+- **Unnecessary headers*** I have failed to remove unnecessary headers
 - **USDView Limitations**: USDView is not meant for editing data, thus the Python plugin provided in this project is rather useless. However, the same mesh translation and DirectLink can be used with any more competent USD data editor such as Maya USD.
 
 ## Acknowledgements

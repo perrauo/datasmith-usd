@@ -1,5 +1,6 @@
 # Datasmith USD Plugin
 THIS PLUGIN IS EXPERIMENTAL AND NOT WORKING IN ITS CURRENT STATE.
+
 This project is a plugin for integrating Datasmith with USD (Universal Scene Description) using DirectLink. It allows for the translation of USD meshes and the synchronization of scenes between Datasmith and USD.
 
 ## Features

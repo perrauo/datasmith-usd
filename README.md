@@ -1,6 +1,5 @@
 # Datasmith USD Plugin
-
-This project is a plugin for integrating Datasmith with USD (Universal Scene Description) using DirectLink. It allows for the translation of USD meshes and the synchronization of scenes between Datasmith and USD.
+This project is a plugin for integrating Datasmith with USD (Universal Scene Description) using DirectLink. It allows for the translation of USD meshes and the synchronization of scenes between Datasmith and USD. THIS PLUGIN IS EXPERIMENTAL AND NOT WORKING IN ITS CURRENT STATE.
 
 ## Features
 
@@ -30,20 +29,20 @@ Start USD view with the following command and specifying the data you would like
 `usdview usd_data\Kitchen_set\Kitchen_set.usd`
 ![image](https://github.com/perrauo/datasmith-usd/assets/24371247/c0947cf8-bc78-4b46-8625-c415adb6df56)
 
-### 1. Start Twinmotion by specifying additional command line arguments
+### 2. Start Twinmotion by specifying additional command line arguments
 Additional command line arguments can be specified using the Unreal launcher
 ![image](https://github.com/perrauo/datasmith-usd/assets/24371247/381c5bb2-c635-4e84-9946-4697f949912f)
 `-OpenProject=prompt -DirectLink.SourceName=Kitchen_set`
 
-### 2. Enabling DirectLink
+### 3. Enabling DirectLink
 To enable DirectLink, use the `EnableDirectLink` method of the `FModule` class. This will initialize the DirectLink connection and set up the necessary endpoints.
 ![image](https://github.com/perrauo/datasmith-usd/assets/24371247/feacd806-bd70-42ee-b209-666daac007fa)
 ![image](https://github.com/perrauo/datasmith-usd/assets/24371247/ce910db3-4391-4ee5-b808-58c386338b2a)
 
-### 3. Import the Direct Link Connection
+### 4. Import the Direct Link Connection
 ![image](https://github.com/perrauo/datasmith-usd/assets/24371247/1ed2653d-649f-4441-b866-3c1c94791f5d)
 
-### 3. Adding a USD Stage
+### 5. Adding a USD Stage
 To add a USD stage, use the `AddStage` method of the `FModule` class. This will load the USD stage and translate the meshes to Datasmith meshes.
 
 ## Known Issues

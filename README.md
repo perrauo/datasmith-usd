@@ -8,15 +8,17 @@ This project is a plugin for integrating Datasmith with USD (Universal Scene Des
 - **USD Mesh Translation**: Converts USD meshes to Datasmith meshes for further processing and export.
 
 ## Installation
-
-1. Clone the repository.
-2. Ensure you have the required software and dependencies installed:
-   - Unreal Engine Source Build 5.4.2
+1. Build Unreal Engine from source (5.4.2)
+3. Clone the repository in your Unreal Engine Datasmith directory
+   - e.g. `C:\repos\UnrealEngine\Engine\Source\Programs\Enterprise\Datasmith`
+4. Ensure you have the required software and dependencies installed:
    - Twinmotion 2024
    - Pixar USD v24.05
    - Boost 1.78
    - Python 3.9
-3. Update the library paths in the build configuration files to match your system setup.
+4. Update the library paths in the build configuration files to match your system setup.
+5. Run `GenerateProjectFiles.bat`
+6. Build the newly generated `DatasmithUsd`target
 
 ## Usage
 
@@ -24,7 +26,6 @@ This project is a plugin for integrating Datasmith with USD (Universal Scene Des
 Start USD view with the following command and specifying the data you would like to open
 `usdview usd_data\Kitchen_set\Kitchen_set.usd`
 ![image](https://github.com/perrauo/datasmith-usd/assets/24371247/c0947cf8-bc78-4b46-8625-c415adb6df56)
-
 
 ### 1. Start Twinmotion by specifying additional command line arguments
 Additional command line arguments can be specified using the Unreal launcher
@@ -50,10 +51,6 @@ To add a USD stage, use the `AddStage` method of the `FModule` class. This will 
 - **Synchronizing the Scene** To synchronize the scene, use the `Sync` method of the `FModule` class. This is intended to update the Datasmith scene with the latest changes from the USD stage.
 
 - **USDView Limitations**: USDView is not meant for editing data, thus the Python plugin provided in this project is rather useless. However, the same mesh translation and DirectLink can be used with any more competent USD data editor such as Maya USD.
-
-## License
-
-This project is licensed under the AGPL-3.
 
 ## Acknowledgements
 

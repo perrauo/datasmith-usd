@@ -48,7 +48,8 @@ To enable DirectLink, use the `EnableDirectLink` method of the `FModule` class. 
 To add a USD stage, use the `AddStage` method of the `FModule` class. This will load the USD stage and translate the meshes to Datasmith meshes.
 
 ## Known Issues
-
+- **Windows Only**
+- **Hardcoded Cache Folder** Currently Datasmith Cache folder used to store intermediary `.udatasmith` and `.udsmesh` files is hardcoded at `C:\DLCacheFolder`
 - **Hardcoded Library Paths**: The current build configuration contains hardcoded library paths. Make sure to update these paths to match your system setup.
 - **Missing datasmith elements**: I have found that despite my best effort, the majority of the datasmith elements are not being transmitted correctly. Further investigation necessary.
 - ![image](https://github.com/perrauo/datasmith-usd/assets/24371247/8a355349-a4dc-47de-9e81-6a86a249d38c)

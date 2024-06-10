@@ -2,42 +2,48 @@
 
 using UnrealBuildTool;
 
+using static UnrealBuildTool.ModuleRules;
+
 [SupportedPlatforms("Win64")]
+[SupportedConfigurations(UnrealTargetConfiguration.Debug, UnrealTargetConfiguration.Development, UnrealTargetConfiguration.Shipping)]
 public class DatasmithUsdTarget : TargetRules
 {
 	public DatasmithUsdTarget(TargetInfo Target)
 		: base(Target)
 	{
+		Type = TargetType.Program;
+		Platform = UnrealTargetPlatform.Win64;
+		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
+		LinkType = TargetLinkType.Monolithic;
+		CppStandard = CppStandardVersion.Cpp17;
+
 		LaunchModuleName = "DatasmithUsd";
 		ExeBinariesSubFolder = @"DatasmithUsdPlugin";
-
-		AddCopyPostBuildStep(Target);
-
-		Type = TargetType.Program;
-		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 		SolutionDirectory = "Programs/Datasmith";
-		//bBuildInSolutionByDefault = false;
 
+		GlobalDefinitions.Add("UE_EXTERNAL_PROFILING_ENABLED=0");
+		AdditionalPlugins.AddRange(new string[]{
+			"UdpMessaging"
+			});
+		EnablePlugins.AddRange(new string[]{
+			"UdpMessaging"
+			});
+
+		bBuildInSolutionByDefault = false;
 		bShouldCompileAsDLL = true;
-		//LinkType = TargetLinkType.Monolithic;
-
-		// WindowsPlatform.ModuleDefinitionFile = "Programs/Enterprise/Datasmith/DatasmithUsdExporter/DatasmithUsdExporterWithDirectLink.def";
-
 		WindowsPlatform.bStrictConformanceMode = false;
-
-		bBuildDeveloperTools = false;
-		bBuildWithEditorOnlyData = true;
+		bCompileWithPluginSupport = true;
+		bBuildDeveloperTools = true;
+		bCompileAgainstEditor = false;
+		bBuildWithEditorOnlyData = false;
 		bCompileAgainstEngine = false;
 		bCompileAgainstCoreUObject = true;
-		//bCompileICU = false;
-		bUsesSlate = false;
-
-		//bHasExports = true;
+		bCompileAgainstApplicationCore = true;
+		bCompileICU = false;
 		bForceEnableExceptions = false;
+		bUsesSlate = true;
 
-		GlobalDefinitions.Add("UE_EXTERNAL_PROFILING_ENABLED=0"); // For DirectLinkUI (see FDatasmithExporterManager::FInitOptions)
-
-		CppStandard = CppStandardVersion.Cpp20;
+		AddCopyPostBuildStep(Target);
 	}
 
 	protected void AddCopyPostBuildStep(TargetInfo Target)
@@ -49,16 +55,10 @@ public class DatasmithUsdTarget : TargetRules
 		}
 
 		string SrcOutputFileName = string.Format(@"$(EngineDir)\Binaries\Win64\{0}\{1}.dll", ExeBinariesSubFolder, OutputName);
-
-		string DstOutputFileName;
-
-		DstOutputFileName = string.Format(@"$(EngineDir)\Binaries\Win64\{0}\{1}.pyd", ExeBinariesSubFolder, OutputName);
+		string DstOutputFileName = string.Format(@"$(EngineDir)\Binaries\Win64\{0}\{1}.pyd", ExeBinariesSubFolder, OutputName);
 
 		PostBuildSteps.Add(string.Format("echo Copying {0} to {1}...", SrcOutputFileName, DstOutputFileName));
 		PostBuildSteps.Add(string.Format("copy /Y \"{0}\" \"{1}\" 1>nul", SrcOutputFileName, DstOutputFileName));
-
-		// Copy resources
-		// TODO: For some reason this only occurs when clicking "Rebuild"
 		PostBuildSteps.Add(string.Format("echo D|xcopy /Y /R /F /S \"{0}\" \"{1}\"",
 			string.Format(@"$(EngineDir)/Source/Programs/Enterprise/Datasmith/DatasmithUsdPlugin/Resources"),
 			string.Format(@"$(EngineDir)/Binaries/Win64/{0}", ExeBinariesSubFolder)

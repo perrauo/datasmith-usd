@@ -3,21 +3,14 @@
 #define DATASMITHUSD_H
 
 #include "CoreMinimal.h"
-#include "Modules/ModuleManager.h"
-#include "Misc/ConfigCacheIni.h"
-#include "Misc/Paths.h"
-#include "DatasmithExporterManager.h"
-#include "DatasmithExportOptions.h"
-#include "DatasmithSceneExporter.h"
+
+#include "DirectLinkEndpoint.h" // IEndpointObserver
 #include "DatasmithMesh.h"
-#include "DatasmithMeshExporter.h"
-#include "IDatasmithExporterUIModule.h"
-#include "IDirectLinkUI.h"
-#include "DatasmithSceneFactory.h"
-#include "DatasmithDirectLink.h"
+
 #include "HAL/PlatformTime.h"
-#include "Logging/LogMacros.h"
-#include "Async/Async.h"
+#include "HAL/CriticalSection.h"
+#include "Containers/Array.h"
+#include "Containers/Map.h"
 
 #include "USDIncludesStart.h"
 #include "pxr/usd/usd/common.h"
@@ -25,19 +18,56 @@
 
 #include <string>
 
-PXR_NAMESPACE_OPEN_SCOPE
+class FEngineLoop;
 
-class FDatasmithUsd {
-public:
-    void EnableDirectLink();
-	void DisableDirectLink();
-	void AddStage(const UsdStageRefPtr& InStage);
+namespace DirectLink
+{
+	struct FRawInfo;
+}
+class FDatasmithDirectLink;
+class IDatasmithScene;
+class FDatasmithSceneExporter;
 
-	TSharedPtr<IDatasmithScene> DatasmithSceneRef;
-	TSharedPtr<FDatasmithSceneExporter> SceneExporterRef;
-};
+namespace DatasmithUsd
+{
 
-PXR_NAMESPACE_CLOSE_SCOPE
+	class FEndpointObserver : public DirectLink::IEndpointObserver
+	{
+	public:
 
+		TArray<FString> ConnectionStatusList;
+
+		FCriticalSection ConnectionStatusListCriticalSection;
+
+		TArray<FString> GetConnectionStatus();
+
+		FORCENOINLINE void OnStateChanged(const DirectLink::FRawInfo& RawInfo) override;
+	};
+
+	class FModuleContext {
+	public:
+		std::string UnicastEndpoint;
+		std::string MulticastEndpoint;
+		pxr::UsdStageRefPtr Stage;
+	};
+
+	class FModule {
+	public:
+		FModule();
+		~FModule();
+		void EnableDirectLink(const FModuleContext& InContext);
+		void DisableDirectLink();
+		void AddStage(const FModuleContext& InContext);
+		void Sync(const FModuleContext& InContext);
+
+		TSharedPtr<FDatasmithDirectLink> DirectLink;
+		TSharedPtr<IDatasmithScene> DatasmithScene;
+		TSharedPtr<FDatasmithSceneExporter> SceneExporter;
+		TSharedPtr<FEndpointObserver> StateObserver;
+		pxr::UsdStageRefPtr Stage;
+		FString UnicastEndpoint = "";
+		FString MulticastEndpoint = "";
+	};
+}
 
 #endif // DATASMITHUSDPLUGIN_H

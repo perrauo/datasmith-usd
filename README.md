@@ -18,7 +18,10 @@ This project is a plugin for integrating Datasmith with USD (Universal Scene Des
    - Python 3.9
 4. Update the library paths in the build configuration files to match your system setup.
 5. Run `GenerateProjectFiles.bat`
-6. Build the newly generated `DatasmithUsd`target
+7. Build the newly generated `DatasmithUsd`target
+8. Add PluginPath to environment's `PYTHONPATH` in order for it to be discovered by `UsdView`
+   - `UsdView` will locate `plugInfo.json` in specified python path
+   - e.g. `C:\repos\UnrealEngine\Engine\Binaries\Win64\DatasmithUsdPlugin`
 
 ## Usage
 
